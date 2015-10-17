@@ -35,45 +35,46 @@ treenode* add_rightnode(treenode *node, int data){
 	
 }
 treenode* build_tree(treenode *node){
-	treenode *tmp_r, *tmp_l,*tmp;
+	treenode *tmp_r4,*tmp_r5,*tmp_r6,*tmp_l2,*tmp_l3;
 	if(node==NULL){
 		node = createnode(node,1);
 	}
-	tmp_l=add_leftnode(node,2);
-	tmp_r=add_leftnode(tmp_l->left,3);
-	tmp_r = add_rightnode(tmp_r->right,4);
-	tmp_r = add_rightnode(node,5);
-	tmp = add_rightnode(tmp_r->right,6);
+	tmp_l2 = node = createnode(tmp_l2,2);
+	tmp_l3 = node = createnode(tmp_l3,3);
+	tmp_r4 = node = createnode(tmp_r4,4);
+	tmp_r5 = node = createnode(tmp_r5,5);
+	tmp_r6 = node = createnode(tmp_r6,6);
 	
+	tmp_l2 = node->left;
+	
+	tmp_l3 = tmp_l2->left;
+
+	tmp_r4 = tmp_l2->right;
+	
+	tmp_r5 = node->right;
+	
+	tmp_r6 =tmp_r5->right;
+	
+
 	return node;
 }
 
- treenode *_flatten(treenode *node)
- {
-  if (node == NULL) {
-    return NULL;
-  }
-  if (node->right) {
-    node->right = _flatten(node->right);
-  }
-  if (node->left) {
-    treenode *tmp = node->right;
-    node->right = _flatten(node->left);
-    treenode *t = node->right;
-    while (t->right) {
-      t = t->right;
+void flatten(treenode *root) {
+    treenode* leftt;
+    while(root!=NULL){
+        if(root->left!=NULL){
+            leftt=root->left;
+            while(leftt->right!=NULL) leftt=leftt->right;
+            leftt->right=root->right;
+            root->right=root->left;
+            root->left=NULL;
+        }
+        root=root->right;
     }
-    t->right = tmp;
-    node->left = NULL;
-  }
-  return node;
-}
-void flatten(treenode *node) {
-    _flatten(node);
 }
 
 int main(){
-	treenode *node=NULL,
+	treenode *node=NULL;
 	// build tree
 	node = build_tree(node);
 	// binary tree to flat tree
